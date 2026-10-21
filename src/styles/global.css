@@ -54,11 +54,145 @@
   animation-delay: 300ms;
 }
 
+.laundry-services-marquee {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--muted);
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.laundry-services-marquee::-webkit-scrollbar {
+  height: 0.45rem;
+}
+
+.laundry-services-marquee::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: var(--muted);
+}
+
+.laundry-services-marquee::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+.laundry-services-marquee:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 55%, transparent);
+  outline-offset: 5px;
+}
+
+.laundry-services-track {
+  display: flex;
+  width: max-content;
+  animation: laundry-services-loop 44s linear infinite;
+  will-change: transform;
+}
+
+.laundry-services-set {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 1rem;
+  padding: 0 0.5rem 1rem;
+}
+
+.laundry-services-marquee:hover .laundry-services-track,
+.laundry-services-marquee:focus-within .laundry-services-track {
+  animation-play-state: paused;
+}
+
+.laundry-service-card {
+  width: min(76vw, 18rem);
+  min-height: 12rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: var(--background);
+  padding: 1.25rem;
+  transition:
+    transform 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.laundry-service-card:hover {
+  transform: translateY(-0.4rem);
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+  box-shadow: 0 1rem 2rem rgb(23 50 74 / 10%);
+}
+
+.laundry-hero-image {
+  transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.laundry-hero-photo:hover .laundry-hero-image {
+  transform: scale(1.045);
+}
+
+.laundry-highlight-card {
+  transition:
+    transform 250ms ease,
+    border-color 250ms ease,
+    background-color 250ms ease;
+}
+
+.laundry-highlight-card:hover {
+  transform: translateY(-0.35rem);
+  border-color: rgb(255 255 255 / 35%);
+  background-color: rgb(255 255 255 / 15%);
+}
+
+.laundry-contact-card {
+  transition:
+    transform 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.laundry-contact-card:hover {
+  transform: translateY(-0.2rem);
+  box-shadow: 0 1rem 2.5rem rgb(23 50 74 / 10%);
+}
+
+@keyframes laundry-services-loop {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes laundry-reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.75rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .laundry-reveal {
+    animation: laundry-reveal-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,
   .animate-image-reveal,
-  .animate-image-zoom {
+  .animate-image-zoom,
+  .laundry-services-track,
+  .laundry-reveal {
     animation: none;
+  }
+
+  .laundry-hero-image,
+  .laundry-service-card,
+  .laundry-highlight-card,
+  .laundry-contact-card {
+    transition: none;
   }
 }
 .scrollbar-hide {

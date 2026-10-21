@@ -1,21 +1,30 @@
 export const siteConfig = {
-  brand: "REHI",
-  companyName: "Rattan Export House Indonesia",
-  tagline: "Connecting Global Buyers With Indonesia’s Finest Rattan Products",
-  whatsappNumber: "6281234567890",
-  phoneDisplay: "+62 812 3456 7890",
-  email: "sales@rehi.co.id",
-  location: "Cirebon, West Java, Indonesia",
-  address: "Cirebon rattan production network, West Java, Indonesia",
-  catalogLabel: "REHI export catalog",
+  brand: "Mele Laundry",
+  tagline: "Pakaian bersih, rapi, dan wangi dengan pelayanan yang ramah.",
+  whatsappNumber: "6282255168080",
+  phoneDisplay: "0822-5516-8080",
+  openingHours: "Senin–Minggu · 08.00–10.00",
 } as const;
 
 export const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Products", href: "/products" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Export Services", href: "/export-services" },
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+  { label: "Layanan", href: "#services" },
+  { label: "Tentang", href: "#about" },
+  { label: "Kontak", href: "#contact" },
+] as const;
+
+export const laundryServices = [
+  { name: "Laundry satuan", detail: "Perawatan pakaian per item." },
+  { name: "Laundry kiloan", detail: "Solusi praktis untuk cucian sehari-hari." },
+  { name: "Perlengkapan bayi", detail: "Cucian kebutuhan si kecil." },
+  { name: "Bedcover", detail: "Perawatan perlengkapan tidur yang tebal." },
+  { name: "Sprei dan selimut", detail: "Bersih dan segar untuk waktu istirahat." },
+  { name: "Gorden", detail: "Bantu rawat kain gorden di rumah." },
+  { name: "Sepatu", detail: "Perawatan untuk sepatu kesayangan." },
+  { name: "Tas", detail: "Perawatan untuk tas sehari-hari." },
+] as const;
+
+export const serviceHighlights = [
+  { title: "Bersih dan rapi", description: "Setiap cucian ditangani dengan perhatian pada hasil akhir." },
+  { title: "Cepat dan efisien", description: "Pilihan Laundry Express dengan layanan 3 Jam Beres." },
+  { title: "Pelayanan ramah", description: "Kami siap membantu memilih layanan yang sesuai." },
 ] as const;

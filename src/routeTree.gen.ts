@@ -9,218 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ProductsRouteImport } from './routes/products'
-import { Route as PortfolioRouteImport } from './routes/portfolio'
-import { Route as ExportServicesRouteImport } from './routes/export-services'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CatalogRouteImport } from './routes/catalog'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
-import { Route as PortfolioIdRouteImport } from './routes/portfolio.$id'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
-const ProductsRoute = ProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PortfolioRoute = PortfolioRouteImport.update({
-  id: '/portfolio',
-  path: '/portfolio',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExportServicesRoute = ExportServicesRouteImport.update({
-  id: '/export-services',
-  path: '/export-services',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CatalogRoute = CatalogRouteImport.update({
-  id: '/catalog',
-  path: '/catalog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductsSlugRoute = ProductsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ProductsRoute,
-} as any)
-const PortfolioIdRoute = PortfolioIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => PortfolioRoute,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
-  '/catalog': typeof CatalogRoute
-  '/contact': typeof ContactRoute
-  '/export-services': typeof ExportServicesRoute
-  '/portfolio': typeof PortfolioRouteWithChildren
-  '/products': typeof ProductsRouteWithChildren
-  '/blog/$slug': typeof BlogSlugRoute
-  '/portfolio/$id': typeof PortfolioIdRoute
-  '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
-  '/catalog': typeof CatalogRoute
-  '/contact': typeof ContactRoute
-  '/export-services': typeof ExportServicesRoute
-  '/portfolio': typeof PortfolioRouteWithChildren
-  '/products': typeof ProductsRouteWithChildren
-  '/blog/$slug': typeof BlogSlugRoute
-  '/portfolio/$id': typeof PortfolioIdRoute
-  '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
-  '/catalog': typeof CatalogRoute
-  '/contact': typeof ContactRoute
-  '/export-services': typeof ExportServicesRoute
-  '/portfolio': typeof PortfolioRouteWithChildren
-  '/products': typeof ProductsRouteWithChildren
-  '/blog/$slug': typeof BlogSlugRoute
-  '/portfolio/$id': typeof PortfolioIdRoute
-  '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/about'
-    | '/blog'
-    | '/catalog'
-    | '/contact'
-    | '/export-services'
-    | '/portfolio'
-    | '/products'
-    | '/blog/$slug'
-    | '/portfolio/$id'
-    | '/products/$slug'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/about'
-    | '/blog'
-    | '/catalog'
-    | '/contact'
-    | '/export-services'
-    | '/portfolio'
-    | '/products'
-    | '/blog/$slug'
-    | '/portfolio/$id'
-    | '/products/$slug'
-  id:
-    | '__root__'
-    | '/'
-    | '/about'
-    | '/blog'
-    | '/catalog'
-    | '/contact'
-    | '/export-services'
-    | '/portfolio'
-    | '/products'
-    | '/blog/$slug'
-    | '/portfolio/$id'
-    | '/products/$slug'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRouteWithChildren
-  CatalogRoute: typeof CatalogRoute
-  ContactRoute: typeof ContactRoute
-  ExportServicesRoute: typeof ExportServicesRoute
-  PortfolioRoute: typeof PortfolioRouteWithChildren
-  ProductsRoute: typeof ProductsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/products': {
-      id: '/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof ProductsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/portfolio': {
-      id: '/portfolio'
-      path: '/portfolio'
-      fullPath: '/portfolio'
-      preLoaderRoute: typeof PortfolioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/export-services': {
-      id: '/export-services'
-      path: '/export-services'
-      fullPath: '/export-services'
-      preLoaderRoute: typeof ExportServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/catalog': {
-      id: '/catalog'
-      path: '/catalog'
-      fullPath: '/catalog'
-      preLoaderRoute: typeof CatalogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -228,73 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/products/$slug': {
-      id: '/products/$slug'
-      path: '/$slug'
-      fullPath: '/products/$slug'
-      preLoaderRoute: typeof ProductsSlugRouteImport
-      parentRoute: typeof ProductsRoute
-    }
-    '/portfolio/$id': {
-      id: '/portfolio/$id'
-      path: '/$id'
-      fullPath: '/portfolio/$id'
-      preLoaderRoute: typeof PortfolioIdRouteImport
-      parentRoute: typeof PortfolioRoute
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
-    }
   }
 }
 
-interface BlogRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
-
-interface PortfolioRouteChildren {
-  PortfolioIdRoute: typeof PortfolioIdRoute
-}
-
-const PortfolioRouteChildren: PortfolioRouteChildren = {
-  PortfolioIdRoute: PortfolioIdRoute,
-}
-
-const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
-  PortfolioRouteChildren,
-)
-
-interface ProductsRouteChildren {
-  ProductsSlugRoute: typeof ProductsSlugRoute
-}
-
-const ProductsRouteChildren: ProductsRouteChildren = {
-  ProductsSlugRoute: ProductsSlugRoute,
-}
-
-const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
-  ProductsRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  BlogRoute: BlogRouteWithChildren,
-  CatalogRoute: CatalogRoute,
-  ContactRoute: ContactRoute,
-  ExportServicesRoute: ExportServicesRoute,
-  PortfolioRoute: PortfolioRouteWithChildren,
-  ProductsRoute: ProductsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

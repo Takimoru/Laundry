@@ -1,128 +1,207 @@
-import { Link } from "@tanstack/react-router";
-import { ArrowRight, Download, MessageCircle } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeftRight,
+  Check,
+  Clock3,
+  HeartHandshake,
+  MessageCircle,
+  Sparkles,
+  WashingMachine,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { PageMeta } from "@/components/site/PageMeta";
-import { SectionHeader } from "@/components/site/SectionHeader";
-import { StatBand } from "@/components/site/StatBand";
-import { productCategories } from "@/data/company";
-import { siteConfig } from "@/config/site";
+import { laundryServices, serviceHighlights, siteConfig } from "@/config/site";
 import { inquiryUrl } from "@/lib/whatsapp";
-import heroImage from "@/assets/rattan-workshop-hero.jpg";
+import storefrontImage from "@/assets/Header.jpeg";
+
+const whatsappUrl = inquiryUrl("Halo Mele Laundry, saya ingin bertanya tentang layanan dan harga.");
+const highlightIcons = [Sparkles, Clock3, HeartHandshake] as const;
 
 export function HomePage() {
-  const whatsappUrl = inquiryUrl("I would like to discuss rattan export supply with REHI.");
-
   return (
     <main>
       <PageMeta
-        title="REHI | Rattan Export House Indonesia"
-        description="REHI supplies export-ready Indonesian rattan furniture for hospitality, wholesale, and custom projects."
+        title="Mele Laundry | Laundry Express"
+        description="Mele Laundry melayani laundry satuan, kiloan, perlengkapan rumah, sepatu, tas, dan lainnya. Bersih, rapi, dan ramah."
       />
 
-      <section className="relative min-h-[76svh] overflow-hidden bg-primary text-primary-foreground">
-        <img
-          src={heroImage}
-          alt="Indonesian rattan furniture production and woven material detail"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-primary via-primary/78 to-primary/20" />
-        <div className="relative mx-auto flex min-h-[76svh] max-w-7xl items-center px-4 py-20 sm:px-6 lg:px-8">
-          <div className="max-w-3xl animate-fade-up">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
-              {siteConfig.companyName}
+      <section id="home" className="scroll-mt-24 overflow-hidden bg-background">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-20">
+          <div className="animate-fade-up">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white px-4 py-2 text-sm font-semibold text-primary shadow-sm">
+              <WashingMachine aria-hidden="true" className="size-4" />
+              Laundry Express · 3 Jam Beres
+            </div>
+            <p className="mt-7 text-sm font-bold uppercase tracking-[0.2em] text-primary">
+              {siteConfig.brand}
             </p>
-            <h1 className="mt-5 font-noto-serif text-4xl font-semibold leading-tight sm:text-6xl">
-              Connecting Global Buyers With Indonesia’s Finest Rattan Products
+            <h1 className="mt-3 max-w-2xl text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              Urusan cucian selesai, harimu terasa lebih ringan.
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-7 text-primary-foreground/82 sm:text-lg">
-              REHI is a specialized export company focused exclusively on Indonesia’s rattan industry, connecting international buyers with trusted Indonesian craftmen through end-to-end  sourcing, quality control, project management, and export coordination.
+            <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
+              Nikmati cucian yang bersih, rapi, dan wangi dengan pelayanan yang cepat, efisien, dan ramah.
+              Kami siap membantu kebutuhan laundry harian hingga barang rumah tangga.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
-                <Link to="/products">
-                  View Collections
+              <Button asChild size="lg">
+                <a href={whatsappUrl} target="_blank" rel="noreferrer">
+                  <MessageCircle aria-hidden="true" />
+                  Tanya via WhatsApp
                   <ArrowRight aria-hidden="true" />
-                </Link>
+                </a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-primary-foreground/60 bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground/18">
-                <Link to="/catalog">
-                  <Download aria-hidden="true" />
-                  Download Catalog
-                </Link>
+              <Button asChild size="lg" variant="outline">
+                <a href="#services">Lihat layanan</a>
               </Button>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-muted-foreground">
+              <span className="inline-flex items-center gap-2">
+                <Check aria-hidden="true" className="size-4 text-primary" />
+                Bersih dan rapi
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Check aria-hidden="true" className="size-4 text-primary" />
+                Pelayanan ramah
+              </span>
+            </div>
+          </div>
+
+          <div className="laundry-hero-photo relative mx-auto w-full max-w-lg lg:justify-self-end">
+            <div className="absolute -inset-3 rotate-2 rounded-[2rem] bg-secondary/75 sm:-inset-4" />
+            <div className="relative overflow-hidden rounded-[1.75rem] border-4 border-white bg-white shadow-2xl">
+              <img
+                src={storefrontImage}
+                alt="Tampak depan gerai Mele Laundry"
+                className="laundry-hero-image aspect-[4/5] w-full object-cover object-[center_16%]"
+              />
+            </div>
+            <div className="absolute -bottom-5 left-4 rounded-2xl bg-white px-5 py-4 shadow-xl sm:-left-7 sm:px-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Cepat dan praktis</p>
+              <p className="mt-1 text-lg font-bold text-primary">Cucian siap dalam 3 jam*</p>
+            </div>
+          </div>
+        </div>
+        <p className="mx-auto max-w-7xl px-4 pb-8 text-xs text-muted-foreground sm:px-6 lg:px-8">
+          *Layanan express sesuai ketentuan dan jenis cucian.
+        </p>
+      </section>
+
+      <section id="services" className="scroll-mt-24 bg-white px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="laundry-reveal max-w-2xl">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">Layanan kami</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Satu tempat untuk banyak kebutuhan laundry.
+            </h2>
+            <p className="mt-4 leading-7 text-muted-foreground">
+              Pilih layanan yang kamu perlukan. Hubungi kami untuk menanyakan harga dan estimasi pengerjaan.
+            </p>
+          </div>
+
+          <p className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground">
+            <ArrowLeftRight aria-hidden="true" className="size-4 text-primary" />
+            Geser ke samping atau gunakan roda mouse untuk melihat semua layanan.
+          </p>
+
+          <div
+            className="laundry-services-marquee mt-8"
+            role="region"
+            aria-label="Daftar layanan Mele Laundry. Geser secara horizontal untuk menjelajah."
+            tabIndex={0}
+            onWheel={(event) => {
+              const marquee = event.currentTarget;
+              const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+              const maxScroll = marquee.scrollWidth - marquee.clientWidth;
+              const nextScroll = marquee.scrollLeft + delta;
+
+              if (delta !== 0 && nextScroll >= 0 && nextScroll <= maxScroll) {
+                event.preventDefault();
+                marquee.scrollLeft = nextScroll;
+              }
+            }}
+          >
+            <div className="laundry-services-track">
+              {[0, 1].map((copyIndex) => (
+                <div
+                  key={copyIndex}
+                  className="laundry-services-set"
+                  aria-hidden={copyIndex === 1}
+                >
+                  {laundryServices.map((service, index) => (
+                    <article key={service.name} className="laundry-service-card">
+                      <span className="inline-flex size-10 items-center justify-center rounded-xl bg-secondary/65 text-sm font-bold text-primary">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <h3 className="mt-4 text-lg font-bold text-foreground">{service.name}</h3>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{service.detail}</p>
+                    </article>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-          <SectionHeader
-            eyebrow="Our Products"
-            title="Find the Right Products for Your Market"
-            description="Explore a wide range of handcrafted rattan furniture, décor, and custom solutions designed to meet the needs of international buyers, distributors, and hospitality brands."
-          />
-          <div className="flex justify-start lg:justify-end">
-            <Button asChild variant="outline">
-              <Link to="/products">
-                Browse all products
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
+      <section id="about" className="scroll-mt-24 bg-primary px-4 py-16 text-primary-foreground sm:px-6 lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="laundry-reveal">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-secondary">Tentang Mele Laundry</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+              Perawatan cucian yang praktis dan bisa dipercaya.
+            </h2>
+            <p className="mt-5 leading-7 text-primary-foreground/80">
+              Mele Laundry hadir untuk membantu kebutuhan laundry sehari-hari. Kami berkomitmen memberi hasil cucian
+              yang bersih dan rapi, proses yang efisien, serta pelayanan yang ramah.
+            </p>
+            <p className="mt-4 leading-7 text-primary-foreground/80">
+              Tujuan kami sederhana: menjadi jasa laundry terpercaya yang mengutamakan kerapian, kecepatan, dan
+              kenyamanan pelanggan.
+            </p>
           </div>
-        </div>
 
-        <div
-        className="mt-10 flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
-        onWheel={(e) => {
-          e.currentTarget.scrollLeft += e.deltaY;
-        }} 
-        >
-          {productCategories.map((category) => (
-            <Link
-              key={category.slug}
-              to="/products/$slug"
-              params={{ slug: category.slug }}
-              className="group w-[300px] shrink-0 snap-start rounded-lg border border-border bg-card p-5 shadow-sm outline-none transition hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-3 focus-visible:ring-ring/50 sm:w-[340px] lg:w-[360px]"
-            >
-              <h3 className="font-noto-serif text-xl font-semibold text-foreground">
-                {category.label}
-              </h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                {category.description}
-              </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3">
-                View category
-                <ArrowRight aria-hidden="true" className="size-4" />
-              </span>
-            </Link>
-          ))}
+          <div className="grid gap-4 sm:grid-cols-3">
+            {serviceHighlights.map((item, index) => {
+              const Icon = highlightIcons[index];
+
+              return (
+                <article key={item.title} className="laundry-highlight-card rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur">
+                  <span className="inline-flex size-11 items-center justify-center rounded-xl bg-secondary text-primary">
+                    <Icon aria-hidden="true" className="size-5" />
+                  </span>
+                  <h3 className="mt-5 font-bold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-primary-foreground/75">{item.description}</p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      <section className="bg-primary px-4 py-16 text-primary-foreground sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+      <section id="contact" className="scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="laundry-contact-card mx-auto grid max-w-7xl gap-8 rounded-[2rem] bg-secondary/45 p-6 sm:p-10 lg:grid-cols-[1fr_auto] lg:items-center lg:p-12">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-secondary">
-              Buyer inquiry
-            </p>
-            <h2 className="mt-3 font-noto-serif text-3xl font-semibold sm:text-4xl">
-              Need pricing, MOQ, or a custom project check?
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">Hubungi kami</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Siap menitipkan cucianmu?
             </h2>
-            <p className="mt-4 max-w-2xl text-primary-foreground/78">
-              Send the sales team your product interest, target quantities, and destination country. The inquiry opens directly in WhatsApp with useful context.
+            <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">
+              Hubungi Mele Laundry untuk bertanya tentang layanan, harga, dan estimasi waktu pengerjaan.
             </p>
+            <div className="mt-5 space-y-1 text-sm text-foreground">
+              <p><span className="font-semibold">WhatsApp:</span> {siteConfig.phoneDisplay}</p>
+              <p><span className="font-semibold">Jam operasional:</span> {siteConfig.openingHours}</p>
+            </div>
           </div>
-          <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+          <Button asChild size="lg" className="w-full sm:w-auto">
             <a href={whatsappUrl} target="_blank" rel="noreferrer">
               <MessageCircle aria-hidden="true" />
-              Start WhatsApp Inquiry
+              Chat Mele Laundry
             </a>
           </Button>
         </div>
       </section>
-       <StatBand />
     </main>
   );
 }

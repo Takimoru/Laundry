@@ -1,24 +1,8 @@
-REHI Color Palette — Usage Reference
-Hex	Color Name	Role	Used For
-#EEE6DD	Warm Cream	Background	Page backgrounds, section fills
-#232220	Charcoal Black	Foreground	Body text, headings on light backgrounds
-#31321F	Dark Olive	Primary	Buttons, hero banners, CTA sections, active nav, logo accent
-#D3D0BC	Warm Tan	Muted	Alternating section backgrounds (stats bands, timeline rows)
-#929F9D	Muted Sage	Muted Text	Subtitles, descriptions, secondary labels, placeholder text
+Mele Laundry color palette
 
-
-                        Supporting Derived Values
-Role	            Value	                 Notes
-Card	            Near-white #F9F6F3	    Cards, form panels — slightly lighter than cream so they lift off the background
-Border	            Tan-mid #B8B4A0	    Card borders, dividers, input edges
-Primary Foreground	Cream #EEE6DD	        Text/icons placed on top of dark olive buttons and hero banners
-Ring / Focus	    Dark Olive #31321F	    Input focus rings, keyboard navigation outlines
-Destructive	        Soft Red #D94F4F	    Error states, delete actions
-
-
-Quick Rule of Thumb
-Dark olive  (#31321F)  →  any interactive element that needs to be clicked
-Cream       (#EEE6DD)  →  any text or background sitting on dark olive
-Charcoal    (#232220)  →  any body text on cream/card/tan backgrounds
-Warm Tan    (#D3D0BC)  →  section backgrounds to break up cream monotony
-Muted Sage  (#929F9D)  →  anything secondary — captions, labels, subtitles
+Primary blue: #1268A8 — buttons, links, and key brand accents
+Deep navy: #17324A — headings and text on light backgrounds
+Warm yellow: #FFD14F — highlights and small accents
+Soft blue: #E1F1FB — muted section backgrounds
+Cloud background: #F3F8FC — main page background
+White: #FFFFFF — cards and contrast surfaces
