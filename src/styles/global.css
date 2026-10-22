@@ -54,27 +54,84 @@
   animation-delay: 300ms;
 }
 
+.laundry-hero-glow {
+  background: radial-gradient(circle, rgb(84 168 217 / 25%) 0%, rgb(84 168 217 / 8%) 42%, transparent 72%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.laundry-navbar-enter {
+  animation: laundry-nav-enter 550ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.laundry-hero-badge {
+  animation: laundry-bob 5s ease-in-out infinite;
+}
+
+.laundry-hero-emphasis {
+  color: var(--primary);
+  background-image: linear-gradient(transparent 78%, rgb(255 209 79 / 78%) 78%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.laundry-proof-card {
+  transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+  animation: fadeInUp 650ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.laundry-proof-card:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.laundry-proof-card:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.laundry-proof-card:hover {
+  transform: translateY(-0.25rem);
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  box-shadow: 0 0.8rem 1.8rem rgb(23 50 74 / 9%);
+}
+
+.laundry-hero-note {
+  animation: laundry-bob 5s ease-in-out 500ms infinite;
+}
+
+.laundry-values-section {
+  background:
+    radial-gradient(ellipse at 4% 88%, rgb(255 209 79 / 16%), transparent 34%),
+    linear-gradient(180deg, #f7fbfe 0%, #edf5fa 100%);
+}
+
+.laundry-vision-card,
+.laundry-mission-card {
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.laundry-vision-card:hover,
+.laundry-mission-card:hover {
+  transform: translateY(-0.3rem);
+  box-shadow: 0 1.5rem 3.5rem rgb(23 50 74 / 14%);
+}
+
+.laundry-mission-item {
+  transition: transform 200ms ease, background-color 200ms ease;
+}
+
+.laundry-mission-item:hover {
+  transform: translateY(-0.15rem);
+  background-color: var(--accent);
+}
+
+.laundry-services-section {
+  background-image: radial-gradient(ellipse at 96% 0%, rgb(225 241 251 / 85%), transparent 38%);
+}
+
 .laundry-services-marquee {
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) var(--muted);
-  scroll-behavior: smooth;
-  overscroll-behavior-x: contain;
+  overflow: hidden;
+  border-radius: 1.5rem;
   mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
-}
-
-.laundry-services-marquee::-webkit-scrollbar {
-  height: 0.45rem;
-}
-
-.laundry-services-marquee::-webkit-scrollbar-track {
-  border-radius: 999px;
-  background: var(--muted);
-}
-
-.laundry-services-marquee::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: var(--primary);
 }
 
 .laundry-services-marquee:focus-visible {
@@ -85,7 +142,7 @@
 .laundry-services-track {
   display: flex;
   width: max-content;
-  animation: laundry-services-loop 44s linear infinite;
+  animation: laundry-services-loop 52s linear infinite;
   will-change: transform;
 }
 
@@ -154,8 +211,35 @@
 }
 
 @keyframes laundry-services-loop {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes laundry-nav-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.75rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes laundry-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-0.3rem);
   }
 }
 
@@ -180,18 +264,47 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .laundry-navbar-enter,
   .animate-fade-up,
   .animate-image-reveal,
   .animate-image-zoom,
   .laundry-services-track,
+  .laundry-hero-badge,
+  .laundry-hero-note,
+  .laundry-proof-card,
   .laundry-reveal {
     animation: none;
   }
 
+  .laundry-services-marquee {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--muted);
+    mask-image: none;
+  }
+
+  .laundry-services-marquee::-webkit-scrollbar {
+    height: 0.45rem;
+  }
+
+  .laundry-services-marquee::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: var(--muted);
+  }
+
+  .laundry-services-marquee::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--primary);
+  }
+
   .laundry-hero-image,
+  .laundry-proof-card,
   .laundry-service-card,
   .laundry-highlight-card,
-  .laundry-contact-card {
+  .laundry-contact-card,
+  .laundry-vision-card,
+  .laundry-mission-card,
+  .laundry-mission-item {
     transition: none;
   }
 }

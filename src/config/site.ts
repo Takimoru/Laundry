@@ -4,9 +4,11 @@ export const siteConfig = {
   whatsappNumber: "6282255168080",
   phoneDisplay: "0822-5516-8080",
   openingHours: "Senin–Minggu · 08.00–10.00",
+  alamat: "Jl. Sepinggan Baru, Sepinggan, Kec. Balikpapan Selatan, Kota   Balikpapan,     Kalimantan Timur 76116",
 } as const;
 
 export const navItems = [
+  { label: "Visi & Misi", href: "#visi-misi" },
   { label: "Layanan", href: "#services" },
   { label: "Tentang", href: "#about" },
   { label: "Kontak", href: "#contact" },
@@ -28,3 +30,12 @@ export const serviceHighlights = [
   { title: "Cepat dan efisien", description: "Pilihan Laundry Express dengan layanan 3 Jam Beres." },
   { title: "Pelayanan ramah", description: "Kami siap membantu memilih layanan yang sesuai." },
 ] as const;
+
+export const VisiMisi = {
+  Visi:"Menjadi jasa laundry terpercaya yang mengutamakan kerapian, kecepatan, dan keramahan dalam setiap pelayanan.",
+  Misi1:"Menjaga kualitas cucian agar tetap bersih dan rapi.",
+  Misi2:"Memberikan pelayanan yang cepat dan efisien.",
+  Misi3:"Mengutamakan keramahan dan kenyamanan pelanggan.",
+  Misi4:"Membangun kepercayaan serta meningkatkan kepuasan pelanggan melalui pelayanan terbaik."
+
+} as const;

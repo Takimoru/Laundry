@@ -1,22 +1,26 @@
 import {
+  BadgeCheck,
   ArrowRight,
   ArrowLeftRight,
   Check,
   Clock3,
+  Droplets,
   HeartHandshake,
   MessageCircle,
   Sparkles,
+  Target,
   WashingMachine,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { PageMeta } from "@/components/site/PageMeta";
-import { laundryServices, serviceHighlights, siteConfig } from "@/config/site";
+import { laundryServices, serviceHighlights, siteConfig, VisiMisi } from "@/config/site";
 import { inquiryUrl } from "@/lib/whatsapp";
 import storefrontImage from "@/assets/Header.jpeg";
 
 const whatsappUrl = inquiryUrl("Halo Mele Laundry, saya ingin bertanya tentang layanan dan harga.");
 const highlightIcons = [Sparkles, Clock3, HeartHandshake] as const;
+const missions = [VisiMisi.Misi1, VisiMisi.Misi2, VisiMisi.Misi3, VisiMisi.Misi4];
 
 export function HomePage() {
   return (
@@ -26,18 +30,19 @@ export function HomePage() {
         description="Mele Laundry melayani laundry satuan, kiloan, perlengkapan rumah, sepatu, tas, dan lainnya. Bersih, rapi, dan ramah."
       />
 
-      <section id="home" className="scroll-mt-24 overflow-hidden bg-background">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-20">
+      <section id="home" className="laundry-hero relative scroll-mt-24 overflow-hidden bg-background">
+        <div aria-hidden="true" className="laundry-hero-glow absolute -right-32 -top-36 size-[34rem] rounded-full" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-20">
           <div className="animate-fade-up">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white px-4 py-2 text-sm font-semibold text-primary shadow-sm">
+            <div className="laundry-hero-badge inline-flex items-center gap-2 rounded-full border border-primary/15 bg-white px-4 py-2 text-sm font-semibold text-primary shadow-sm">
               <WashingMachine aria-hidden="true" className="size-4" />
               Laundry Express · 3 Jam Beres
             </div>
             <p className="mt-7 text-sm font-bold uppercase tracking-[0.2em] text-primary">
               {siteConfig.brand}
             </p>
-            <h1 className="mt-3 max-w-2xl text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Urusan cucian selesai, harimu terasa lebih ringan.
+            <h1 className="mt-3 max-w-2xl text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              Urusan cucian selesai, <span className="laundry-hero-emphasis">harimu terasa lebih ringan.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
               Nikmati cucian yang bersih, rapi, dan wangi dengan pelayanan yang cepat, efisien, dan ramah.
@@ -65,9 +70,23 @@ export function HomePage() {
                 Pelayanan ramah
               </span>
             </div>
+            <div className="mt-9 grid max-w-xl grid-cols-2 gap-3 sm:grid-cols-3">
+              <div className="laundry-proof-card rounded-2xl border border-border/70 bg-white/80 p-4 backdrop-blur">
+                <p className="text-2xl font-bold text-primary">3 jam</p>
+                <p className="mt-1 text-xs font-medium leading-5 text-muted-foreground">pilihan express</p>
+              </div>
+              <div className="laundry-proof-card rounded-2xl border border-border/70 bg-white/80 p-4 backdrop-blur">
+                <p className="text-2xl font-bold text-primary">8</p>
+                <p className="mt-1 text-xs font-medium leading-5 text-muted-foreground">jenis perawatan</p>
+              </div>
+              <div className="laundry-proof-card col-span-2 rounded-2xl border border-border/70 bg-white/80 p-4 backdrop-blur sm:col-span-1">
+                <p className="text-2xl font-bold text-primary">Sepenuh hati</p>
+                <p className="mt-1 text-xs font-medium leading-5 text-muted-foreground">ramah untuk setiap pelanggan</p>
+              </div>
+            </div>
           </div>
 
-          <div className="laundry-hero-photo relative mx-auto w-full max-w-lg lg:justify-self-end">
+          <div className="laundry-hero-photo animate-image-reveal animation-delay-150 relative mx-auto w-full max-w-lg lg:justify-self-end">
             <div className="absolute -inset-3 rotate-2 rounded-[2rem] bg-secondary/75 sm:-inset-4" />
             <div className="relative overflow-hidden rounded-[1.75rem] border-4 border-white bg-white shadow-2xl">
               <img
@@ -76,18 +95,73 @@ export function HomePage() {
                 className="laundry-hero-image aspect-[4/5] w-full object-cover object-[center_16%]"
               />
             </div>
-            <div className="absolute -bottom-5 left-4 rounded-2xl bg-white px-5 py-4 shadow-xl sm:-left-7 sm:px-6">
+            <div className="laundry-hero-note absolute -bottom-5 left-4 rounded-2xl bg-white px-5 py-4 shadow-xl sm:-left-7 sm:px-6">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Cepat dan praktis</p>
               <p className="mt-1 text-lg font-bold text-primary">Cucian siap dalam 3 jam*</p>
             </div>
           </div>
         </div>
-        <p className="mx-auto max-w-7xl px-4 pb-8 text-xs text-muted-foreground sm:px-6 lg:px-8">
+        <p className="relative mx-auto max-w-7xl px-4 pb-8 text-xs text-muted-foreground sm:px-6 lg:px-8">
           *Layanan express sesuai ketentuan dan jenis cucian.
         </p>
       </section>
 
-      <section id="services" className="scroll-mt-24 bg-white px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <section id="visi-misi" className="laundry-values-section scroll-mt-24 overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="laundry-reveal mx-auto max-w-2xl text-center">
+            <p className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+              <Sparkles aria-hidden="true" className="size-4" />
+              Pegangan kami
+            </p>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Tujuan yang sama, di setiap cucian.
+            </h2>
+            <p className="mt-4 leading-7 text-muted-foreground">
+              Kami menjaga kualitas dan kenyamanan lewat tujuan yang jelas serta langkah yang konsisten.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+            <article className="laundry-vision-card laundry-reveal relative overflow-hidden rounded-[2rem] bg-primary p-7 text-primary-foreground shadow-xl sm:p-9">
+              <div aria-hidden="true" className="absolute -right-12 -top-12 size-48 rounded-full border-[24px] border-white/10" />
+              <span className="relative inline-flex size-12 items-center justify-center rounded-2xl bg-secondary text-primary shadow-md">
+                <Target aria-hidden="true" className="size-6" />
+              </span>
+              <p className="relative mt-8 text-xs font-bold uppercase tracking-[0.2em] text-secondary">Visi kami</p>
+              <h3 className="relative mt-3 text-2xl font-bold leading-snug sm:text-3xl">Membuat hari terasa lebih ringan.</h3>
+              <p className="relative mt-5 max-w-lg text-base leading-7 text-primary-foreground/85">{VisiMisi.Visi}</p>
+              <div className="relative mt-8 inline-flex items-center gap-2 text-sm font-semibold text-secondary">
+                <BadgeCheck aria-hidden="true" className="size-5" />
+                Bersih, cepat, dan ramah
+              </div>
+            </article>
+
+            <article className="laundry-mission-card laundry-reveal rounded-[2rem] border border-border bg-white p-7 shadow-lg sm:p-9">
+              <div className="flex items-center gap-4">
+                <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-primary">
+                  <Droplets aria-hidden="true" className="size-6" />
+                </span>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Misi kami</p>
+                  <h3 className="mt-1 text-2xl font-bold text-foreground">Hal kecil, hasil yang terasa.</h3>
+                </div>
+              </div>
+              <ol className="mt-7 grid gap-3 sm:grid-cols-2">
+                {missions.map((mission, index) => (
+                  <li key={mission} className="laundry-mission-item flex gap-3 rounded-2xl bg-background p-4">
+                    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                      0{index + 1}
+                    </span>
+                    <span className="pt-1 text-sm font-medium leading-6 text-foreground">{mission}</span>
+                  </li>
+                ))}
+              </ol>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="laundry-services-section scroll-mt-24 bg-white px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="laundry-reveal max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">Layanan kami</p>
@@ -100,26 +174,17 @@ export function HomePage() {
           </div>
 
           <p className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground">
-            <ArrowLeftRight aria-hidden="true" className="size-4 text-primary" />
-            Geser ke samping atau gunakan roda mouse untuk melihat semua layanan.
+            <span aria-hidden="true" className="inline-flex size-7 items-center justify-center rounded-full bg-secondary text-primary">
+              <ArrowLeftRight className="size-4" />
+            </span>
+            Layanan bergerak otomatis — arahkan pointer untuk menjeda.
           </p>
 
           <div
             className="laundry-services-marquee mt-8"
             role="region"
-            aria-label="Daftar layanan Mele Laundry. Geser secara horizontal untuk menjelajah."
+            aria-label="Daftar layanan Mele Laundry yang bergerak berulang."
             tabIndex={0}
-            onWheel={(event) => {
-              const marquee = event.currentTarget;
-              const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-              const maxScroll = marquee.scrollWidth - marquee.clientWidth;
-              const nextScroll = marquee.scrollLeft + delta;
-
-              if (delta !== 0 && nextScroll >= 0 && nextScroll <= maxScroll) {
-                event.preventDefault();
-                marquee.scrollLeft = nextScroll;
-              }
-            }}
           >
             <div className="laundry-services-track">
               {[0, 1].map((copyIndex) => (
@@ -192,6 +257,7 @@ export function HomePage() {
             <div className="mt-5 space-y-1 text-sm text-foreground">
               <p><span className="font-semibold">WhatsApp:</span> {siteConfig.phoneDisplay}</p>
               <p><span className="font-semibold">Jam operasional:</span> {siteConfig.openingHours}</p>
+              <p><span className="font-semibold">Alamat kami:</span> {siteConfig.alamat}</p>
             </div>
           </div>
           <Button asChild size="lg" className="w-full sm:w-auto">
