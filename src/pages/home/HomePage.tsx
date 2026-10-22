@@ -11,6 +11,7 @@ import {
   Target,
   WashingMachine,
 } from "lucide-react";
+import { useCallback, useEffect, useRef, type PointerEvent as ReactPointerEvent } from "react";
 
 import { Button } from "@/components/ui/button";
 import { PageMeta } from "@/components/site/PageMeta";
@@ -22,7 +23,156 @@ const whatsappUrl = inquiryUrl("Halo Mele Laundry, saya ingin bertanya tentang l
 const highlightIcons = [Sparkles, Clock3, HeartHandshake] as const;
 const missions = [VisiMisi.Misi1, VisiMisi.Misi2, VisiMisi.Misi3, VisiMisi.Misi4];
 
+function normalizeServiceMarquee(viewport: HTMLDivElement, track: HTMLDivElement | null) {
+  const setWidth = track?.children[0]?.getBoundingClientRect().width ?? 0;
+
+  if (setWidth === 0) return;
+
+  const offset = ((viewport.scrollLeft - setWidth) % setWidth + setWidth) % setWidth;
+  const normalizedPosition = setWidth + offset;
+
+  if (Math.abs(viewport.scrollLeft - normalizedPosition) > 0.5) {
+    viewport.scrollLeft = normalizedPosition;
+  }
+}
+
 export function HomePage() {
+  const servicesViewportRef = useRef<HTMLDivElement>(null);
+  const servicesTrackRef = useRef<HTMLDivElement>(null);
+  const isInteractingWithServicesRef = useRef(false);
+  const isServicesRegionFocusedRef = useRef(false);
+  const resumeAutoScrollTimerRef = useRef<number | null>(null);
+  const dragStartRef = useRef<{ pointerId: number; startX: number; scrollLeft: number } | null>(null);
+
+  const pauseServicesAutoScroll = useCallback(() => {
+    isInteractingWithServicesRef.current = true;
+    if (resumeAutoScrollTimerRef.current !== null) {
+      window.clearTimeout(resumeAutoScrollTimerRef.current);
+      resumeAutoScrollTimerRef.current = null;
+    }
+  }, []);
+
+  const resumeServicesAutoScroll = useCallback(() => {
+    if (resumeAutoScrollTimerRef.current !== null) {
+      window.clearTimeout(resumeAutoScrollTimerRef.current);
+    }
+
+    resumeAutoScrollTimerRef.current = window.setTimeout(() => {
+      if (!isServicesRegionFocusedRef.current) {
+        isInteractingWithServicesRef.current = false;
+      }
+      resumeAutoScrollTimerRef.current = null;
+    }, 1200);
+  }, []);
+
+  useEffect(() => {
+    const viewport = servicesViewportRef.current;
+    const track = servicesTrackRef.current;
+
+    if (!viewport || !track) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let prefersReducedMotion = reducedMotion.matches;
+    let previousFrameTime = 0;
+    let animationFrameId = 0;
+
+    const centerOnMiddleSet = () => {
+      const setWidth = track.children[0]?.getBoundingClientRect().width ?? 0;
+      if (setWidth > 0) viewport.scrollLeft = setWidth;
+    };
+
+    const handleWheel = (event: WheelEvent) => {
+      const rawDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (rawDelta === 0) return;
+
+      event.preventDefault();
+      pauseServicesAutoScroll();
+      const multiplier = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.clientWidth : 1;
+      const delta = rawDelta * multiplier;
+      viewport.scrollLeft += delta;
+      normalizeServiceMarquee(viewport, track);
+      resumeServicesAutoScroll();
+    };
+
+    const handleMotionPreferenceChange = (event: MediaQueryListEvent) => {
+      prefersReducedMotion = event.matches;
+    };
+
+    const animate = (frameTime: number) => {
+      if (previousFrameTime === 0) previousFrameTime = frameTime;
+      const elapsed = Math.min(frameTime - previousFrameTime, 50);
+      previousFrameTime = frameTime;
+
+      if (!prefersReducedMotion && !isInteractingWithServicesRef.current) {
+        viewport.scrollLeft += elapsed * 0.035;
+        normalizeServiceMarquee(viewport, track);
+      }
+
+      animationFrameId = window.requestAnimationFrame(animate);
+    };
+
+    centerOnMiddleSet();
+    viewport.addEventListener("wheel", handleWheel, { passive: false });
+    reducedMotion.addEventListener("change", handleMotionPreferenceChange);
+    window.addEventListener("resize", centerOnMiddleSet);
+    animationFrameId = window.requestAnimationFrame(animate);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+      viewport.removeEventListener("wheel", handleWheel);
+      reducedMotion.removeEventListener("change", handleMotionPreferenceChange);
+      window.removeEventListener("resize", centerOnMiddleSet);
+      if (resumeAutoScrollTimerRef.current !== null) {
+        window.clearTimeout(resumeAutoScrollTimerRef.current);
+      }
+    };
+  }, [pauseServicesAutoScroll, resumeServicesAutoScroll]);
+
+  const handleServicesPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    pauseServicesAutoScroll();
+
+    if (event.pointerType === "mouse" && event.button === 0) {
+      dragStartRef.current = {
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        scrollLeft: event.currentTarget.scrollLeft,
+      };
+      event.currentTarget.setPointerCapture(event.pointerId);
+      event.currentTarget.classList.add("is-dragging");
+      event.preventDefault();
+    }
+  };
+
+  const handleServicesPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragStartRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    event.currentTarget.scrollLeft = drag.scrollLeft + drag.startX - event.clientX;
+    normalizeServiceMarquee(event.currentTarget, servicesTrackRef.current);
+  };
+
+  const handleServicesPointerEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (dragStartRef.current?.pointerId === event.pointerId) {
+      dragStartRef.current = null;
+      event.currentTarget.classList.remove("is-dragging");
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    resumeServicesAutoScroll();
+  };
+
+  const handleServicesFocus = () => {
+    isServicesRegionFocusedRef.current = true;
+    pauseServicesAutoScroll();
+  };
+
+  const handleServicesBlur = () => {
+    isServicesRegionFocusedRef.current = false;
+    resumeServicesAutoScroll();
+  };
+
   return (
     <main>
       <PageMeta
@@ -177,21 +327,28 @@ export function HomePage() {
             <span aria-hidden="true" className="inline-flex size-7 items-center justify-center rounded-full bg-secondary text-primary">
               <ArrowLeftRight className="size-4" />
             </span>
-            Layanan bergerak otomatis — arahkan pointer untuk menjeda.
+            Geser dengan jari, roda mouse, atau tahan lalu tarik.
           </p>
 
           <div
+            ref={servicesViewportRef}
             className="laundry-services-marquee mt-8"
             role="region"
-            aria-label="Daftar layanan Mele Laundry yang bergerak berulang."
+            aria-label="Daftar layanan Mele Laundry yang dapat digeser dan bergerak berulang."
             tabIndex={0}
+            onPointerDown={handleServicesPointerDown}
+            onPointerMove={handleServicesPointerMove}
+            onPointerUp={handleServicesPointerEnd}
+            onPointerCancel={handleServicesPointerEnd}
+            onFocus={handleServicesFocus}
+            onBlur={handleServicesBlur}
           >
-            <div className="laundry-services-track">
-              {[0, 1].map((copyIndex) => (
+            <div ref={servicesTrackRef} className="laundry-services-track">
+              {[0, 1, 2].map((copyIndex) => (
                 <div
                   key={copyIndex}
                   className="laundry-services-set"
-                  aria-hidden={copyIndex === 1}
+                  aria-hidden={copyIndex !== 1}
                 >
                   {laundryServices.map((service, index) => (
                     <article key={service.name} className="laundry-service-card">

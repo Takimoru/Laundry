@@ -129,9 +129,30 @@
 }
 
 .laundry-services-marquee {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   border-radius: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--muted);
+  scroll-behavior: auto;
+  overscroll-behavior-x: contain;
   mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+}
+
+.laundry-services-marquee::-webkit-scrollbar {
+  height: 0.45rem;
+}
+
+.laundry-services-marquee::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: var(--muted);
+}
+
+.laundry-services-marquee::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--primary);
 }
 
 .laundry-services-marquee:focus-visible {
@@ -142,8 +163,6 @@
 .laundry-services-track {
   display: flex;
   width: max-content;
-  animation: laundry-services-loop 52s linear infinite;
-  will-change: transform;
 }
 
 .laundry-services-set {
@@ -153,9 +172,9 @@
   padding: 0 0.5rem 1rem;
 }
 
-.laundry-services-marquee:hover .laundry-services-track,
-.laundry-services-marquee:focus-within .laundry-services-track {
-  animation-play-state: paused;
+.laundry-services-marquee.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .laundry-service-card {
@@ -210,16 +229,6 @@
   box-shadow: 0 1rem 2.5rem rgb(23 50 74 / 10%);
 }
 
-@keyframes laundry-services-loop {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
 @keyframes laundry-nav-enter {
   from {
     opacity: 0;
@@ -268,33 +277,11 @@
   .animate-fade-up,
   .animate-image-reveal,
   .animate-image-zoom,
-  .laundry-services-track,
   .laundry-hero-badge,
   .laundry-hero-note,
   .laundry-proof-card,
   .laundry-reveal {
     animation: none;
-  }
-
-  .laundry-services-marquee {
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary) var(--muted);
-    mask-image: none;
-  }
-
-  .laundry-services-marquee::-webkit-scrollbar {
-    height: 0.45rem;
-  }
-
-  .laundry-services-marquee::-webkit-scrollbar-track {
-    border-radius: 999px;
-    background: var(--muted);
-  }
-
-  .laundry-services-marquee::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: var(--primary);
   }
 
   .laundry-hero-image,
